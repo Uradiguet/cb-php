@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription - Gestionnaire de Budget{% endblock %}
+
+{% block body %}
+<div class="hero min-h-screen bg-base-200">
+    <div class="hero-content flex-col lg:flex-row-reverse">
+        <div class="text-center lg:text-left">
+            <h1 class="text-5xl font-bold">Inscription</h1>
+            <p class="py-6">Créez votre compte pour commencer à gérer votre budget.</p>
+        </div>
+        <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+            {{ form_start(registrationForm, {'attr': {'class': 'card-body'}}) }}
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">{{ form_label(registrationForm.name) }}</span>
+                </label>
+                {{ form_widget(registrationForm.name) }}
+                {{ form_errors(registrationForm.name) }}
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">{{ form_label(registrationForm.email) }}</span>
+                </label>
+                {{ form_widget(registrationForm.email) }}
+                {{ form_errors(registrationForm.email) }}
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">{{ form_label(registrationForm.plainPassword.first) }}</span>
+                </label>
+                {{ form_widget(registrationForm.plainPassword.first) }}
+                {{ form_errors(registrationForm.plainPassword.first) }}
+            </div>
+
+            <div class="form-control">
+                <label class="label">
+                    <span class="label-text">{{ form_label(registrationForm.plainPassword.second) }}</span>
+                </label>
+                {{ form_widget(registrationForm.plainPassword.second) }}
+                {{ form_errors(registrationForm.plainPassword.second) }}
+            </div>
+
+            <div class="form-control mt-6">
+                <button class="btn btn-primary" type="submit">
+                    S'inscrire
+                </button>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="{{ path('app_login') }}" class="link link-primary">
+                    Déjà un compte ? Connectez-vous
+                </a>
+            </div>
+            {{ form_end(registrationForm) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

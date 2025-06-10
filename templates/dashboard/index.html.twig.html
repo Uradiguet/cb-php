@@ -1,0 +1,123 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord - Gestionnaire de Budget{% endblock %}
+
+{% block body %}
+<div class="grid gap-6">
+    <div class="flex justify-between items-center">
+        <h1 class="text-3xl font-bold">Tableau de bord</h1>
+        <div class="text-sm">Bienvenue, {{ app.user.name }} !</div>
+    </div>
+
+    <!-- Statistiques -->
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="stat bg-success text-success-content rounded-lg">
+            <div class="stat-figure">
+                <i class="fas fa-arrow-up text-2xl"></i>
+            </div>
+            <div class="stat-title text-success-content/70">Revenus du mois</div>
+            <div class="stat-value">{{ monthly_income|number_format(2, ',', ' ') }} €</div>
+        </div>
+
+        <div class="stat bg-error text-error-content rounded-lg">
+            <div class="stat-figure">
+                <i class="fas fa-arrow-down text-2xl"></i>
+            </div>
+            <div class="stat-title text-error-content/70">Dépenses du mois</div>
+            <div class="stat-value">{{ monthly_expenses|number_format(2, ',', ' ') }} €</div>
+        </div>
+
+        <div class="stat {% if monthly_balance >= 0 %}bg-info text-info-content{% else %}bg-warning text-warning-content{% endif %} rounded-lg">
+            <div class="stat-figure">
+                <i class="fas fa-balance-scale text-2xl"></i>
+            </div>
+            <div class="stat-title">Solde du mois</div>
+            <div class="stat-value">{{ monthly_balance|number_format(2, ',', ' ') }} €</div>
+        </div>
+
+        <div class="stat bg-primary text-primary-content rounded-lg">
+            <div class="stat-figure">
+                <i class="fas fa-piggy-bank text-2xl"></i>
+            </div>
+            <div class="stat-title text-primary-content/70">Solde total</div>
+            <div class="stat-value">{{ total_balance|number_format(2, ',', ' ') }} €</div>
+        </div>
+    </div>
+
+    <!-- Actions rapides -->
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <h2 class="card-title">Actions rapides</h2>
+            <div class="flex flex-wrap gap-2">
+                <a href="{{ path('app_transaction_new') }}" class="btn btn-primary">
+                    <i class="fas fa-plus mr-2"></i>Nouvelle transaction
+                </a>
+                <a href="{{ path('app_category_new') }}" class="btn btn-secondary">
+                    <i class="fas fa-tag mr-2"></i>Nouvelle catégorie
+                </a>
+                <a href="{{ path('app_budget_new') }}" class="btn btn-accent">
+                    <i class="fas fa-chart-pie mr-2"></i>Nouveau budget
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dernières transactions -->
+    <div class="card bg-base-100 shadow-xl">
+        <div class="card-body">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="card-title">Dernières transactions</h2>
+                <a href="{{ path('app_transaction_index') }}" class="btn btn-ghost btn-sm">
+                    Voir tout
+                </a>
+            </div>
+
+            {% if recent_transactions %}
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Description</th>
+                        <th>Catégorie</th>
+                        <th>Montant</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for transaction in recent_transactions %}
+                    <tr>
+                        <td>{{ transaction.date|date('d/m/Y') }}</td>
+                        <td>{{ transaction.description }}</td>
+                        <td>
+                            {% if transaction.category %}
+                            <div class="badge" style="background-color: {{ transaction.category.color }}">
+                                <i class="{{ transaction.category.icon }} mr-1"></i>
+                                {{ transaction.category.name }}
+                            </div>
+                            {% else %}
+                            <span class="text-base-content/50">Aucune</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                                        <span class="{% if transaction.type == 'income' %}text-success{% else %}text-error{% endif %} font-semibold">
+                                            {% if transaction.type == 'income' %}+{% else %}-{% endif %}{{ transaction.amount|number_format(2, ',', ' ') }} €
+                                        </span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-8">
+                <i class="fas fa-inbox text-4xl text-base-content/30 mb-4"></i>
+                <p class="text-base-content/50">Aucune transaction pour le moment.</p>
+                <a href="{{ path('app_transaction_new') }}" class="btn btn-primary mt-4">
+                    <i class="fas fa-plus mr-2"></i>Ajouter votre première transaction
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

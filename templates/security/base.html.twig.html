@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion - Gestionnaire de Budget{% endblock %}
+
+{% block body %}
+<div class="hero min-h-screen bg-base-200">
+  <div class="hero-content flex-col lg:flex-row-reverse">
+    <div class="text-center lg:text-left">
+      <h1 class="text-5xl font-bold">Connexion</h1>
+      <p class="py-6">Connectez-vous à votre gestionnaire de budget personnel.</p>
+    </div>
+    <div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+      <form method="post" class="card-body">
+        {% if error %}
+        <div class="alert alert-error">
+          <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+        </div>
+        {% endif %}
+
+        <div class="form-control">
+          <label class="label" for="inputEmail">
+            <span class="label-text">Email</span>
+          </label>
+          <input type="email" value="{{ last_username }}" name="_username" id="inputEmail" class="input input-bordered" required autofocus>
+        </div>
+
+        <div class="form-control">
+          <label class="label" for="inputPassword">
+            <span class="label-text">Mot de passe</span>
+          </label>
+          <input type="password" name="_password" id="inputPassword" class="input input-bordered" required>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <div class="form-control mt-6">
+          <button class="btn btn-primary" type="submit">
+            Se connecter
+          </button>
+        </div>
+
+        <div class="text-center mt-4">
+          <a href="{{ path('app_register') }}" class="link link-primary">
+            Pas encore de compte ? Inscrivez-vous
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
