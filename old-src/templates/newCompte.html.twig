@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <form method="post" action="/newCompte">
+        <label class="input input-bordered flex items-center gap-2">
+            Titulaire
+            <input type="text" name="titulaire" class="grow" placeholder="Nom du titulaire" />
+        </label>
+        <div class="divider"></div>
+        <button class="btn btn-neutral">Créer le compte</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Utilisateur{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto mt-10">
+        <div class="card shadow-lg compact bg-white">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Modifier l'utilisateur</h2>
+                {{ form_start(form, {'attr': {'class': 'space-y-6'}}) }}
+                <div class="form-control w-full">
+                    <label class="label" for="login">
+                        <span class="label-text">Nom d'utilisateur</span>
+                    </label>
+                    {{ form_widget(form.login, {'attr': {'class': 'input input-bordered w-full', 'placeholder': 'Nom d\'utilisateur'}}) }}
+                    {% if form_errors(form.login) %}
+                        <span class="text-red-500">{{ form_errors(form.login) }}</span>
+                    {% endif %}
+                </div>
+                <div class="form-control mt-6">
+                    <button type="submit" class="btn btn-primary w-full">
+                        {{ form.vars.submit_button_label | default('Modifier') }}
+                    </button>
+                </div>
+                {{ form_end(form) }}
+                <div class="mt-4 text-center">
+                    <a href="{{ path('app_user') }}" class="btn btn-secondary">
+                        Retour à la liste des utilisateurs
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

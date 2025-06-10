@@ -1,0 +1,28 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <h1>Retrait</h1>
+
+    {% if error %}
+        <div class="alert alert-error">
+            {{ error }}
+        </div>
+    {% endif %}
+
+    <form method="post" action="/retrait">
+        <label class="input input-bordered flex items-center gap-2">
+            Intituler
+            <input type="text" name="intitule" class="grow" placeholder="Intituler du retrait" />
+        </label>
+        <label class="input input-bordered flex items-center gap-2">
+            Montant
+            <input type="number" name="montant" class="grow" placeholder="Montant à retirer" min="1" />
+        </label>
+        <div class="divider"></div>
+        <button class="btn btn-neutral">Retirer</button>
+    </form>
+
+    <div class="mt-4">
+        <a href="/">Retour au compte</a>
+    </div>
+{% endblock %}

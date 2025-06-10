@@ -1,14 +1,9 @@
 <?php
-use Pecee\SimpleRouter\SimpleRouter;
 
-require "./../vendor/autoload.php";
+use App\Kernel;
 
-session_start();
+require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
-$loader = new \Twig\Loader\FilesystemLoader('./../src/templates');
-$twig = new \Twig\Environment($loader, ["file_name_pattern"=>"*.html.twig"]);
-require "./../src/config/database.php";
-require "./../src/config/router.php";
-
-
-SimpleRouter::start();
+return function (array $context) {
+    return new Kernel($context['APP_ENV'], (bool) $context['APP_DEBUG']);
+};

@@ -1,0 +1,9 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+    <ul>
+        {% for op in cb.operation %}
+            <li>{{ op.intitule }} - {{ op.montant }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

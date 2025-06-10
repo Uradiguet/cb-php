@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Message{% endblock %}
+
+{% block body %}
+<div class="alert alert-{{ type }}">
+    {{ msg }}
+</div>
+{% endblock %}

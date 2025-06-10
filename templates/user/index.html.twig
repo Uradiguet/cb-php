@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block body %}
+    <h2 class="text-4xl font-extrabold dark:text-white">Utilisateurs</h2>
+    <div class="divider"></div>
+    <a href="{{ url('user_add') }}" class="btn btn-info">Ajouter un utilisateur...</a>
+    <div class="divider"></div>
+    {% for label, messages in app.flashes(['success', 'danger']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <ul>
+    {% for u in users %}
+        <div class="divider"></div>
+        <li>{{ u.login }} <a href="{{ url('user_delete',{id: u.id}) }}" class="btn btn-warning">Supprimer</a>
+            <a href="{{ url('user_modify', {id: u.id}) }}" class="btn btn-neutral">Modifier</a>
+            <a href="{{ url('operation_add', {id: u.id}) }}" class="btn btn-warning">Ajouter une Operation...</a>
+            <a href="{{ url('compte_view', {id: u.id}) }}" class="btn btn-neutral">Voir les Operations</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}
